@@ -1,9 +1,10 @@
 import { create } from "zustand";
+import { Models } from "appwrite";
 
 interface EditProjectModalState {
   isOpen: boolean;
-  data: any | null;
-  onOpen: (data: any) => void;
+  data: Models.Document | null;
+  onOpen: (data: Models.Document) => void;
   onClose: () => void;
 }
 

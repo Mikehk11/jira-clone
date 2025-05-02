@@ -5,6 +5,7 @@ import { useGetWorkspaces } from "@/features/workspaces/api/use-get-workspaces";
 import { useParams } from "next/navigation";
 import { useCreateWorkspaceModal } from "@/features/workspaces/hooks/use-create-workspace-modal";
 import { Button } from "@/components/ui/button";
+import { Models } from "appwrite";
 
 export const Sidebar = () => {
   const { data: workspaces } = useGetWorkspaces();
@@ -27,7 +28,7 @@ export const Sidebar = () => {
       </div>
 
       <ul className="space-y-2">
-        {workspaces?.map((workspace: any) => (
+        {workspaces?.map((workspace: Models.Document) => (
           <li key={workspace.$id}>
             <Link
               href={`/dashboard/${workspace.$id}/projects`}

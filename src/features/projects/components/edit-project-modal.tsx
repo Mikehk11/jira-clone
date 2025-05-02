@@ -3,6 +3,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { CreateProjectForm } from "./create-project-form";
 import { useEditProjectModal } from "../hooks/use-edit-project-modal";
+import { Models } from "appwrite";
 
 export const EditProjectModal = () => {
   const { isOpen, onClose, data } = useEditProjectModal();
@@ -17,8 +18,7 @@ export const EditProjectModal = () => {
             Edit Project
           </DialogTitle>
         </DialogHeader>
-        {/* TypeScript fix: explicitly cast `data` as any */}
-        <CreateProjectForm initialData={data as any} />
+        <CreateProjectForm initialData={data as Models.Document} />
       </DialogContent>
     </Dialog>
   );

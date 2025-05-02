@@ -5,6 +5,7 @@ import { CreateWorkspaceModal } from "@/features/workspaces/components/create-wo
 import { useCreateWorkspaceModal } from "@/features/workspaces/hooks/use-create-workspace-modal";
 import { useGetWorkspaces } from "@/features/workspaces/api/use-get-workspaces";
 import Link from "next/link";
+import { Models } from "appwrite";
 
 export default function WorkspaceTestPage() {
   const { onOpen } = useCreateWorkspaceModal();
@@ -21,7 +22,7 @@ export default function WorkspaceTestPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {isLoading && <p>Loading...</p>}
-        {workspaces?.map((workspace: any) => (
+        {workspaces?.map((workspace: Models.Document) => (
           <Link
             key={workspace.$id}
             href={`/dashboard/${workspace.$id}/projects`}

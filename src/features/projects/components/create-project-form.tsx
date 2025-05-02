@@ -20,11 +20,12 @@ import { createProject, updateProject } from "../server/route";
 import { toast } from "react-hot-toast";
 import { useCreateProjectModal } from "../hooks/use-create-project-modal";
 import { useEditProjectModal } from "../hooks/use-edit-project-modal";
+import { Models } from "appwrite";
 
 type InputType = z.infer<typeof createProjectSchema>;
 
 interface CreateProjectFormProps {
-  initialData?: any;
+  initialData?: Models.Document; // proper Appwrite document type
 }
 
 export const CreateProjectForm = ({ initialData }: CreateProjectFormProps) => {
@@ -47,7 +48,7 @@ export const CreateProjectForm = ({ initialData }: CreateProjectFormProps) => {
 
   const onSubmit = async (values: InputType) => {
     try {
-      if (isEdit) {
+      if (isEdit && initialData) {
         await updateProject({ ...values, projectId: initialData.$id });
         toast.success("Project updated!");
         closeEdit();

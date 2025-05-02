@@ -9,6 +9,7 @@ import { useDeleteProject } from "@/features/projects/api/use-delete-project";
 import { CreateTaskForm } from "@/features/tasks/components/create-task-form";
 import { useGetTasks } from "@/features/tasks/api/use-get-tasks";
 import { useUpdateTask } from "@/features/tasks/api/use-update-task";
+import { Models } from "appwrite";
 
 import {
   DragDropContext,
@@ -45,7 +46,7 @@ export default function ProjectPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {isLoading && <p>Loading projects...</p>}
-        {projects?.map((project: any) => (
+        {projects?.map((project: Models.Document) => (
           <div key={project.$id} className="border p-4 rounded shadow space-y-2">
             <h2 className="font-semibold text-lg">{project.name}</h2>
             <p className="text-xs text-muted-foreground">{project.imageUrl}</p>
@@ -70,13 +71,11 @@ export default function ProjectPage() {
         ))}
       </div>
 
-      {/* Task creation form */}
       <div className="max-w-lg mt-10">
         <h2 className="text-xl font-semibold mb-4">Create Task</h2>
         <CreateTaskForm />
       </div>
 
-      {/* Drag and Drop Task Board */}
       <div className="mt-10 space-y-2">
         <h2 className="text-xl font-semibold mb-4">Tasks by Status</h2>
         {isTasksLoading && <p>Loading tasks...</p>}
@@ -96,8 +95,8 @@ export default function ProjectPage() {
                     </h3>
 
                     {tasks
-                      ?.filter((task: any) => task.status === status)
-                      .map((task: any, index: number) => (
+                      ?.filter((task: Models.Document) => task.status === status)
+                      .map((task: Models.Document, index: number) => (
                         <Draggable
                           key={task.$id}
                           draggableId={task.$id}

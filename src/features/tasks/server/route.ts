@@ -1,11 +1,11 @@
 "use server";
 
-import { ID, Permission, Role, Query } from "appwrite";
+import { ID, Permission, Role, Query, Models } from "appwrite";
 import { appwrite } from "@/lib/appwrite";
 import { createTaskSchema, updateTaskSchema } from "../schemas";
 
-// Create task
-export const createTask = async (values: unknown) => {
+// Create a task
+export const createTask = async (values: unknown): Promise<Models.Document> => {
   const validated = createTaskSchema.safeParse(values);
   if (!validated.success) {
     throw new Error("Invalid fields");
@@ -34,7 +34,7 @@ export const createTask = async (values: unknown) => {
 };
 
 // Get tasks by projectId
-export const getTasksByProject = async (projectId: string) => {
+export const getTasksByProject = async (projectId: string): Promise<Models.Document[]> => {
   const result = await appwrite.database.listDocuments(
     process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
     process.env.NEXT_PUBLIC_APPWRITE_TASKS_COLLECTION_ID!,
@@ -44,8 +44,8 @@ export const getTasksByProject = async (projectId: string) => {
   return result.documents;
 };
 
-// Update task status
-export const updateTask = async (values: { taskId: string; status: string }) => {
+// Update a task status
+export const updateTask = async (values: { taskId: string; status: string }): Promise<Models.Document> => {
   const { taskId, status } = values;
 
   const task = await appwrite.database.updateDocument(
