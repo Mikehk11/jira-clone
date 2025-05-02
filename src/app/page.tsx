@@ -2,14 +2,17 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useGetWorkspaces } from "@/features/workspaces/api/use-get-workspaces";
 
 export default function HomeRedirect() {
   const router = useRouter();
+  const { data: workspaces } = useGetWorkspaces();
 
   useEffect(() => {
-    // Optional: replace with your real workspace ID dynamically if needed
-    router.replace("/dashboard/workspace-test");
-  }, [router]);
+    if (workspaces && workspaces.length > 0) {
+      router.replace(`/dashboard/${workspaces[0].$id}/projects`);
+    }
+  }, [router, workspaces]);
 
   return null;
 }
