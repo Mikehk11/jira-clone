@@ -2,7 +2,7 @@
 
 import { ID, Permission, Role, Query, Models } from "appwrite";
 import { appwrite } from "@/lib/appwrite";
-import { createTaskSchema, updateTaskSchema } from "../schemas";
+import { createTaskSchema } from "../schemas";
 
 // Create a task
 export const createTask = async (values: unknown): Promise<Models.Document> => {
@@ -11,7 +11,7 @@ export const createTask = async (values: unknown): Promise<Models.Document> => {
     throw new Error("Invalid fields");
   }
 
-  const { title, status, projectId, description } = validated.data;
+  const { title, status, projectId, description, dueDate, labels } = validated.data;
 
   const task = await appwrite.database.createDocument(
     process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
@@ -22,6 +22,8 @@ export const createTask = async (values: unknown): Promise<Models.Document> => {
       status,
       projectId,
       description,
+      dueDate,
+      labels,
     },
     [
       Permission.read(Role.any()),

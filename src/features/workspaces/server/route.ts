@@ -1,12 +1,12 @@
 "use server";
 
-import { ID, Permission, Role, Query } from "appwrite";
+import { ID, Permission, Role, Models } from "appwrite";
 import { appwrite } from "@/lib/appwrite";
-import { createWorkspaceSchema, updateWorkspaceSchema } from "../schemas";
+import { createWorkspaceSchema } from "../schemas";
 import { v4 as uuidv4 } from "uuid";
 
 // Create workspace
-export const createWorkspace = async (values: unknown) => {
+export const createWorkspace = async (values: unknown): Promise<Models.Document> => {
   const validated = createWorkspaceSchema.safeParse(values);
   if (!validated.success) {
     throw new Error("Invalid fields");
@@ -34,7 +34,7 @@ export const createWorkspace = async (values: unknown) => {
 };
 
 // Get all workspaces
-export const getWorkspaces = async () => {
+export const getWorkspaces = async (): Promise<Models.Document[]> => {
   const result = await appwrite.database.listDocuments(
     process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
     process.env.NEXT_PUBLIC_APPWRITE_WORKSPACES_COLLECTION_ID!
